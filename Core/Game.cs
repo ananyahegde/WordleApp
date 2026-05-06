@@ -28,13 +28,13 @@ namespace Wordle
             Console.WriteLine("\nGame Started.\n");
             while (true)
             {
-                console.write("\nguess the word: ");
-                guessedword = console.readline();
-                guessedword = guessedword.trim().tolower();
+                Console.Write("\nguess the word: ");
+                guessedWord = Console.ReadLine();
+                guessedWord = guessedWord.Trim().ToLower();
 
-                if (allguessedwords.contains(guessedword))
+                if (allGuessedWords.Contains(guessedWord))
                 {
-                    console.writeline("\nyou already guessed this word.");
+                    Console.WriteLine("\nyou already guessed this word.");
                     continue;
                 }
 
