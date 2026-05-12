@@ -9,12 +9,12 @@ CREATE TABLE words (
 ```
 
 ```bash
-    \copy words(word) FROM 'words.txt' WITH (FORMAT csv)
+\copy words(word) FROM 'words.txt' WITH (FORMAT csv)
 ```
 
 verify:
 ```bash
-    SELECT * FROM words LIMIT 5;
+SELECT * FROM words LIMIT 5;
 ```
 
 create `users` and `sessions` table:
@@ -44,3 +44,10 @@ dotnet add package Npgsql --version 8.0.9
 ![Screenshot 2](./Screenshots/2.png)
 ![Screenshot 3](./Screenshots/3.png)
 ![Screenshot 4](./Screenshots/4.png)
+
+### DB Integration Results<br><br>
+![Screenshot 5](./Screenshots/5.png)
+![Screenshot 6](./Screenshots/6.png)
+![Screenshot 7](./Screenshots/7.png)
+![Screenshot 8](./Screenshots/8.png)
+
