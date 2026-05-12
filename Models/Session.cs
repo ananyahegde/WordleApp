@@ -1,6 +1,6 @@
 namespace Wordle
 {
-    internal class Session
+    public class Session
     {
         public int sessionid { get; set; }
         public int userid { get; set; }

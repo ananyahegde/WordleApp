@@ -1,6 +1,7 @@
 // WordProvider class.
 // fetches all 5 letter words from words.txt upon object initialization.
 // Provides a method GetRandomWord() method to get a random target word for the current game.
+// change this ------
 
 namespace Wordle
 {

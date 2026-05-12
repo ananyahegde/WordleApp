@@ -11,6 +11,11 @@ namespace Wordle
         GuessValidator guessValidator;
         FeedbackGenerator feedbackGenerator;
         CommentGenerator commentGenerator;
+        LoginHandler login;
+        SignupHandler signup;
+        SessionHandler session;
+        User? currentUser;
+        StatsHandler stats;
 
         public Game()
         {
@@ -21,11 +26,48 @@ namespace Wordle
             guessValidator = new GuessValidator();
             feedbackGenerator = new FeedbackGenerator();
             commentGenerator = new CommentGenerator();
+            login = new LoginHandler();
+            signup = new SignupHandler();
+            session = new SessionHandler();
+            stats = new StatsHandler();
+        }
+
+        private int CalculateScore(int guessCount)
+        {
+            return (7 - guessCount) * 100;
         }
 
         internal void Play()
         {
             Console.WriteLine("\nGame Started.\n");
+
+            // sign up or sign in
+            Console.WriteLine("Sign Up or Login to your Account");
+
+            Console.WriteLine("1. Sign Up");
+            Console.WriteLine("2. Log in");
+            Console.Write("\nChoose an option: ");
+
+            string? choice = Console.ReadLine();
+
+            switch (choice)
+            {
+                case "1":
+                    signup.SignupUser();
+                    Console.WriteLine("\nNow please log in.");
+                    currentUser = login.LoginUser();
+                    break;
+                case "2":
+                    currentUser = login.LoginUser();
+                    break;
+                case "3":
+                    Environment.Exit(0);
+                    break;
+                default:
+                    Console.WriteLine("Invalid option. Please choose 1 or 2.\n");
+                    break;
+            }
+
             while (true)
             {
                 Console.Write("\nguess the word: ");
@@ -48,6 +90,9 @@ namespace Wordle
                         string comment = commentGenerator.GetComment(guessCount);
                         Console.Write($"\nCorrect! The word was '{target}'. ");
                         Console.WriteLine(comment);
+
+                        // save current session
+                        session.SaveSession(currentUser.userid, CalculateScore(guessCount));
                         break;
                     }
 
@@ -81,9 +126,9 @@ namespace Wordle
                             Console.WriteLine("2. Reveal Word");
                             Console.WriteLine("3. Exit");
                             Console.Write("\nChoose an option: ");
-                            string choice = Console.ReadLine();
+                            string? c = Console.ReadLine();
 
-                            switch (choice)
+                            switch (c)
                             {
                                 case "1":
                                     guessCount = 1;
@@ -91,6 +136,9 @@ namespace Wordle
                                     break;
                                 case "2":
                                     Console.WriteLine($"\nThe word was: {target.ToUpper()}");
+                                    session.SaveSession(currentUser.userid, CalculateScore(guessCount));
+                                    Console.WriteLine($"Your score for this round was: {CalculateScore(guessCount)}");
+                                    Console.WriteLine($"Your total score: {stats.GetTotalScore(currentUser.userid)}");
                                     return;
                                 case "3":
                                     Environment.Exit(0);

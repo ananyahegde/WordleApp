@@ -1,6 +1,6 @@
 namespace Wordle
 {
-    internal class User
+    public class User
     {
         public int userid { get; set; }
         public string username { get; set; } = string.Empty;
